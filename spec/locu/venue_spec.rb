@@ -165,5 +165,14 @@ describe Locu::Venue, vcr: { match_requests_on: [:host] } do
       end
     end
   end
+
+  describe '#to_h' do
+    let(:venue_id) { '9cd2508687bbb3ff6a49' }
+
+    it 'converts the venue object to a hash' do
+      venue = locu.venues.find(venue_id)
+      venue.to_hash.should be_a Hash
+    end
+  end
 end
 

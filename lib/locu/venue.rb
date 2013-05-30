@@ -1,3 +1,25 @@
+class Struct
+  def to_hash
+    @output_hash = {}
+    recursive_traversal(self.class.members, @output_hash)
+    debugger
+    4
+  end
+
+  def recursive_traversal(keys, hash)
+    debugger
+    keys.each do |key|
+      unless self.send(key).is_a?(Array) #if self.send(key).is_a?(String) || self.send(key).is_a?(Symbol)
+        hash[key] = self.send(key) # stick it on
+      else
+        #debugger
+        hash[key] = recursive_traversal(self.send(key), hash[key])
+      end
+    end
+    hash
+  end
+end
+
 module Locu
   Venue = Struct.new(:id, :name, :website_url, :has_menu, :menus, :last_updated, :cache_expiry, :resource_uri,
                      :street_address, :locality, :region, :postal_code, :country, :lat, :long, :open_hours) do
@@ -68,7 +90,6 @@ module Locu
 
       venue
     end
-
   end
 
   VenueSearchMetadata = Struct.new :cache_expiry, :limit, :next, :offset, :previous, :total_count do
